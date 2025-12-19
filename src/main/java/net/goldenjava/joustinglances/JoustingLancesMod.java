@@ -1,6 +1,7 @@
 package net.goldenjava.joustinglances;
 
 import com.mojang.logging.LogUtils;
+import net.goldenjava.joustinglances.network.PacketHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -42,6 +43,9 @@ public class JoustingLancesMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        event.enqueueWork(() -> {
+            PacketHandler.register();
+        });
     }
 
     // Add the example block item to the building blocks tab

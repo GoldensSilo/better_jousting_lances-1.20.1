@@ -1,37 +1,72 @@
 package net.goldenjava.joustinglances.events.custom;
 
 import net.goldenjava.joustinglances.JoustingLancesMod;
-import net.goldenjava.joustinglances.util.ModTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.io.Console;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = JoustingLancesMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EventHandler {
+//    @SubscribeEvent
+//    public static void commonSetup(FMLCommonSetupEvent event){
+//        event.enqueueWork(() -> {
+//            PacketHandler.register();
+//        });
+//    }
 
-    @SubscribeEvent
-    public void onRightClick(PlayerInteractEvent event)
-    {
-        Player p = event.getEntity();
-        ItemStack stack = p.getInventory().getSelected();
-
-
-        if(stack != null) //Check to make sure the ItemStack gotten is not null.
-        {
-            //if(stack.is(ModTags.Items.LANCELIKE_ITEM))
-
-            if(stack.is(ModTags.Items.LANCELIKE_ITEM)) // this is correct, well as long as you registered the item #cell_phone correctly
-            {
-                p.setSecondsOnFire(3); //Honestly I prefer Console.out().Println("Am I holding a Phone?!?"); rather than directly causing things to happen
-            }
-        }
-    }
+//    public int getUseDuration(ItemStack pStack) {
+//        return 72000;
+//    }
+//
+//    @SubscribeEvent
+//    public static void onRightClick(PlayerInteractEvent event)
+//    {
+//
+//        Player p = event.getEntity();
+//
+//        ItemStack stack = p.getItemInHand(InteractionHand.MAIN_HAND); //Check the item in the mainhand
+//        Item chosenItem = stack.getItem(); //gets exactly what item the stack found
+//
+//       boolean canJoust = false;
+//       final int duration = 100;
+//       final int joustCooldownChecks = 5;
+//
+//        if(stack != null) //Check to make sure the stack  is not a null value, may be redundant but better safe than sorry
+//        {
+//            if(stack.is(ModTags.Items.LANCELIKE_ITEM) && !p.getCooldowns().isOnCooldown(chosenItem)) //checks if the item is in the tag
+//            {
+//                //p.setSecondsOnFire(10); light player on fire if it worked
+//                //TODO: Redo the logic as a packet, figure out how to make a ray
+//                //cooldown hijinks
+//                new java.util.Timer().schedule(new TimerTask(){
+//                    //used to cancel the timer after all checks are done
+//                    int timerCheck = 1;
+//                    @Override
+//                    public void run() {
+//                        System.out.println("Executed...");
+//                        //is the user inside the case zone?
+//                        p.sendSystemMessage(Component.literal("Lance Jousting"));
+//                        timerCheck--;
+//
+//
+//                        if (timerCheck == 0){
+//                            p.stopUsingItem();
+//                            p.getCooldowns().addCooldown(chosenItem, 100);
+//
+//                            System.out.println("Joust now on cooldown");
+//                            this.cancel();//cancel timer
+//                        }
+//                    }
+//                },0, 2);
+//
+//
+//               // p.level().broadcastEntityEvent(p, (byte)30);
+//            }
+//
+//            if(stack.is(ModTags.Items.LANCELIKE_ITEM) && p.getCooldowns().isOnCooldown(chosenItem)) //checks if the item is in the tag
+//            {
+//                p.stopUsingItem();
+//            }
+//        }
+//    }
 
 }
