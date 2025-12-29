@@ -93,11 +93,19 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
+
+            //PlayerAnimator
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
+
+            //PlayerAnimator
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -136,6 +144,12 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+
+    //PlayerAnimator
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
 }
 
 dependencies {
@@ -161,9 +175,10 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    // PLAYER ANIMATOR ********************************************************************************************
+    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
     //spartan weaponry
     implementation fg.deobf("curse.maven:spartanWeaponry-278141:6842571")
-
     //dummy mod and jade, idr what is what, top is probably jade
     implementation fg.deobf("curse.maven:jade-324717:6855440")
     //dummy mod

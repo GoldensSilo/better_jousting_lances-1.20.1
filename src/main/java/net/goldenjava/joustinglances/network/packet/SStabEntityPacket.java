@@ -60,7 +60,6 @@ public class SStabEntityPacket {
 
 
             if (stack.is(ModTags.Items.LANCELIKE_ITEM)) {
-
                 for (Entity target : entities) {
                     HitResult hitResult = RayChecks.EntityCheck(target, rayStart, rayEnd, 0.3f);
                     if (hitResult.getType() == HitResult.Type.ENTITY) {
@@ -68,6 +67,8 @@ public class SStabEntityPacket {
                         target.hurt(target.damageSources().playerAttack(player),  castedDamage * (castedSpeed));
 
                         target.hurtMarked = true;
+
+                        //TODO: Lower durability on each hit, more than normal attacks
                     }
                 }
                // player.setSecondsOnFire(2);
