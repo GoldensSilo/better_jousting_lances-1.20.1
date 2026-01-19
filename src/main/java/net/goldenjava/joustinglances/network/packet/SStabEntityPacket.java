@@ -1,14 +1,18 @@
 package net.goldenjava.joustinglances.network.packet;
 
+import net.goldenjava.joustinglances.registry.EffectRegistry;
+import net.goldenjava.joustinglances.registry.EnchantmentRegistry;
 import net.goldenjava.joustinglances.util.ModTags;
 import net.goldenjava.joustinglances.util.RayChecks;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.network.NetworkEvent;
@@ -58,10 +62,10 @@ public class SStabEntityPacket {
 
             List<? extends Entity> entities = level.getEntities(player, boundingBox);
 
-
+            //Lance logic
             if (stack.is(ModTags.Items.LANCELIKE_ITEM)) {
                 for (Entity target : entities) {
-                    HitResult hitResult = RayChecks.EntityCheck(target, rayStart, rayEnd, 0.3f);
+                    HitResult hitResult = RayChecks.EntityCheck(target, rayStart, rayEnd, 0.1f);
                     if (hitResult.getType() == HitResult.Type.ENTITY) {
 
                         target.hurt(target.damageSources().playerAttack(player),  castedDamage * (castedSpeed));
@@ -70,6 +74,24 @@ public class SStabEntityPacket {
 
                         //TODO: Lower durability on each hit, more than normal attacks
                     }
+                }
+                //Lunge Enchant stuff
+                int joustLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistry.LUNGE.get(), player);
+                if (joustLevel > 0 && !player.getCooldowns().isOnCooldown(chosenItem)){
+                    player.addEffect(new MobEffectInstance(EffectRegistry.LUNGE.get(), 2, joustLevel, false, false, false));
+                    player.getCooldowns().addCooldown(chosenItem, 40);
+
+
+//                    Vec3 forward = player.getLookAngle();
+//                    var vec = forward.multiply(4, 0, 4).normalize().add(0, 0, 0).scale(2);
+//                    player.setPos(player.position().add(0, 1.5, 0));
+//                    vec.add(0, 0.25, 0);
+//
+//                    player.setDeltaMovement(new Vec3(
+//                            Mth.lerp(.85f, player.getDeltaMovement().x, vec.x),
+//                            Mth.lerp(.0f, player.getDeltaMovement().y, vec.y),
+//                            Mth.lerp(.85f, player.getDeltaMovement().z, vec.z)
+//                    ));
                 }
                // player.setSecondsOnFire(2);
             }

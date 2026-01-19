@@ -8,12 +8,12 @@ import net.minecraft.world.item.Item;
 
 public class ModTags {
 
-    public static class Items{
+    public static class Items {
 
         public static final TagKey<Item> LANCELIKE_ITEM = tag("lancelike_item");
 
         private static TagKey<Item> tag(String name){
-            return ItemTags.create(new ResourceLocation(JoustingLancesMod.MODID, name));
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(JoustingLancesMod.MODID, name));
         }
 
     }

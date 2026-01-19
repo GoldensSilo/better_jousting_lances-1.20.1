@@ -2,6 +2,7 @@ package net.goldenjava.joustinglances.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -21,5 +22,4 @@ public class RayChecks {
             return BlockHitResult.miss(end, Direction.UP, BlockPos.containing(end));
 
     }
-
 }

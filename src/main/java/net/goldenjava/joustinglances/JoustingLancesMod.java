@@ -2,6 +2,8 @@ package net.goldenjava.joustinglances;
 
 import com.mojang.logging.LogUtils;
 import net.goldenjava.joustinglances.network.PacketHandler;
+import net.goldenjava.joustinglances.registry.EffectRegistry;
+import net.goldenjava.joustinglances.registry.EnchantmentRegistry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -28,6 +30,11 @@ public class JoustingLancesMod
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        //Register Enchantments
+        EnchantmentRegistry.ENCHANTMENTS.register(modEventBus);
+
+        EffectRegistry.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -37,7 +44,7 @@ public class JoustingLancesMod
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
-        // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
+        // Register our mod's ForgeConfigSpec so that Forge can createSpace and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
