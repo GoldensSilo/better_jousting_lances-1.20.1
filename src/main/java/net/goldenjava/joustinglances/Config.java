@@ -19,7 +19,7 @@ public class Config
             .defineInRange("verticalMultiplier", 1.0, 0, 10000);
 
     private static final ForgeConfigSpec.DoubleValue SPEAR_DAMAGE_MULTIPLIER = BUILDER
-            .comment("Vertical velocity multiplier for the lunge enchantment. Values must have a decimal place, the decimal can be 0. Min is 0 Max is 10000.")
+            .comment("The multiplier applied on lance movement damage. Values must have a decimal place, the decimal can be 0. Min is 0 Max is 10000.")
             .defineInRange("spearDamageMultiplier", 1.95, 0, 10000);
 
     private static final ForgeConfigSpec.IntValue LUNGE_COOLDOWN = BUILDER
