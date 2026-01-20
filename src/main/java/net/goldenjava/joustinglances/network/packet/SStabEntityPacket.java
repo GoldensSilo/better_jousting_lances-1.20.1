@@ -59,7 +59,7 @@ public class SStabEntityPacket {
 
             //(reminds me of pythagoras..)
             double speedRaw = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2)); //make the castedSpeed a single number
-            float castedSpeed = ((float) (speedRaw * 1.95)); //cast the double into a float so we can use it later
+            float castedSpeed = ((float) (speedRaw * Config.spearDamageMultiplier)); //cast the double into a float so we can use it later
 
             List<? extends Entity> entities = level.getEntities(player, boundingBox);
 
@@ -69,7 +69,18 @@ public class SStabEntityPacket {
                     HitResult hitResult = RayChecks.EntityCheck(target, rayStart, rayEnd, 0.1f);
                     if (hitResult.getType() == HitResult.Type.ENTITY) {
 
-                        target.hurt(target.damageSources().playerAttack(player),  castedDamage * (castedSpeed));
+                        //get target's speed
+                        double tdeltaX = target.getX() - target.xOld;
+                        double tdeltaY = target.getY() - target.yOld;
+                        double tdeltaZ = target.getZ() - target.zOld;
+
+                        //(reminds me of pythagoras..)
+                        double tspeedRaw = Math.sqrt(Math.pow(tdeltaX, 2) + Math.pow(tdeltaY, 2) + Math.pow(tdeltaZ, 2)); //make the castedSpeed a single number
+                        float tcastedSpeed = ((float) (tspeedRaw * Config.spearDamageMultiplier)); //cast the double into a float so we can use it later
+
+                        /* ****************************************************************************************** */
+
+                        target.hurt(target.damageSources().playerAttack(player), castedDamage + (castedDamage * castedSpeed) + (castedDamage * tcastedSpeed));
 
                         target.hurtMarked = true;
 

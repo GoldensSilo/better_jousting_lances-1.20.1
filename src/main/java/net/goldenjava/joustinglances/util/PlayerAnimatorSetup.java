@@ -6,7 +6,6 @@ import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
 import net.goldenjava.joustinglances.JoustingLancesMod;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
