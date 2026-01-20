@@ -1,5 +1,6 @@
 package net.goldenjava.joustinglances.network.packet;
 
+import net.goldenjava.joustinglances.Config;
 import net.goldenjava.joustinglances.registry.EffectRegistry;
 import net.goldenjava.joustinglances.registry.EnchantmentRegistry;
 import net.goldenjava.joustinglances.util.ModTags;
@@ -43,7 +44,7 @@ public class SStabEntityPacket {
             ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND); //Check the item in the mainhand
             Item chosenItem = stack.getItem(); //gets exactly what item the stack found
             double totalDamageRaw = player.getAttributeValue(Attributes.ATTACK_DAMAGE); //grab play atk damage
-            float castedDamage = ((float) (totalDamageRaw * 0.9)); //cast the double into a float so we can use it later
+            float castedDamage = ((float) (totalDamageRaw)); //cast the double into a float so we can use it later
 
             //set up points for raycast detection
             Vec3 rayStart = player.getEyePosition();
@@ -58,7 +59,7 @@ public class SStabEntityPacket {
 
             //(reminds me of pythagoras..)
             double speedRaw = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2)); //make the castedSpeed a single number
-            float castedSpeed = ((float) (speedRaw * 0.8 + 1)); //cast the double into a float so we can use it later
+            float castedSpeed = ((float) (speedRaw * 1.95)); //cast the double into a float so we can use it later
 
             List<? extends Entity> entities = level.getEntities(player, boundingBox);
 
@@ -74,26 +75,17 @@ public class SStabEntityPacket {
 
                         //TODO: Lower durability on each hit, more than normal attacks
                     }
+
                 }
                 //Lunge Enchant stuff
                 int joustLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistry.LUNGE.get(), player);
                 if (joustLevel > 0 && !player.getCooldowns().isOnCooldown(chosenItem)){
                     player.addEffect(new MobEffectInstance(EffectRegistry.LUNGE.get(), 2, joustLevel, false, false, false));
-                    player.getCooldowns().addCooldown(chosenItem, 40);
-
-
-//                    Vec3 forward = player.getLookAngle();
-//                    var vec = forward.multiply(4, 0, 4).normalize().add(0, 0, 0).scale(2);
-//                    player.setPos(player.position().add(0, 1.5, 0));
-//                    vec.add(0, 0.25, 0);
-//
-//                    player.setDeltaMovement(new Vec3(
-//                            Mth.lerp(.85f, player.getDeltaMovement().x, vec.x),
-//                            Mth.lerp(.0f, player.getDeltaMovement().y, vec.y),
-//                            Mth.lerp(.85f, player.getDeltaMovement().z, vec.z)
-//                    ));
+                    player.getCooldowns().addCooldown(chosenItem, Config.lungeCooldown);
+                    if (!player.isCreative()){
+                        chosenItem.setDamage(stack, chosenItem.getDamage(stack) + 1);
+                    }
                 }
-               // player.setSecondsOnFire(2);
             }
         });
     }

@@ -3,7 +3,6 @@ package net.goldenjava.joustinglances.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.goldenjava.joustinglances.JoustingLancesMod;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.MouseHandler;
 import net.minecraftforge.client.settings.KeyConflictContext;
 
 public class Keybindings {

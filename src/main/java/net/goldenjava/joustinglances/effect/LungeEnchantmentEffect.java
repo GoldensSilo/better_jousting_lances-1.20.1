@@ -1,6 +1,6 @@
 package net.goldenjava.joustinglances.effect;
 
-import net.goldenjava.joustinglances.enchantments.LungeEnchantment;
+import net.goldenjava.joustinglances.Config;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -13,8 +13,6 @@ public class LungeEnchantmentEffect extends MobEffect {
         super(pCategory, pColor);
     }
 
-    //gotta figure out the nausea shader at some point, it would make the spell perfect
-
     private int effectDuration;
     private int multiplier;
 
@@ -24,18 +22,13 @@ public class LungeEnchantmentEffect extends MobEffect {
 
 
     private void launchForward(LivingEntity entity) {
-//        double newMotionDirection = 0.6;
-
-//        this.motionDirection = 0.4 * newMotionDirection + 0.8 * this.motionDirection;
-//        entity.setDeltaMovement(entity.getDeltaMovement().add(this.motionDirection.x, 0, this.motionDirection.y));
-
         Vec3 forward = entity.getLookAngle();
-        var vec = forward.multiply(2, 0, 2).normalize().add(0, 0, 0).scale(multiplier);
+        var vec = forward.multiply(Config.horizontalMultiplier, Config.verticalMultiplier, Config.horizontalMultiplier).normalize().add(0, 0, 0).scale(multiplier);
 
         entity.setDeltaMovement(new Vec3(
-                Mth.lerp(.85f, entity.getDeltaMovement().x, vec.x),
-                Mth.lerp(.0f, entity.getDeltaMovement().y, vec.y),
-                Mth.lerp(.85f, entity.getDeltaMovement().z, vec.z)
+                Mth.lerp(.65f, entity.getDeltaMovement().x, vec.x),
+                Mth.lerp(.6f, entity.getDeltaMovement().y, vec.y),
+                Mth.lerp(.65f, entity.getDeltaMovement().z, vec.z)
         ));
     }
 
@@ -43,7 +36,7 @@ public class LungeEnchantmentEffect extends MobEffect {
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        multiplier = amplifier + 1;
+        multiplier = amplifier;
 
         this.effectDuration = duration;
 

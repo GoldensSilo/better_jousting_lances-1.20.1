@@ -15,7 +15,7 @@ public class PacketHandler {
     }
 
     private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(
-            new ResourceLocation(JoustingLancesMod.MODID, "main"))
+            ResourceLocation.fromNamespaceAndPath(JoustingLancesMod.MODID, "main"))
             .serverAcceptedVersions(s -> true)
             .clientAcceptedVersions(s -> true)
             .networkProtocolVersion(() -> "1")
