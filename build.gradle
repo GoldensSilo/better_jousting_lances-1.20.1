@@ -178,11 +178,11 @@ dependencies {
     // PLAYER ANIMATOR ********************************************************************************************
     implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
     //spartan weaponry
-    implementation fg.deobf("curse.maven:spartanWeaponry-278141:6842571")
+    //implementation fg.deobf("curse.maven:spartanWeaponry-278141:6842571")
     //jade
-    implementation fg.deobf("curse.maven:jade-324717:6855440")
+    //implementation fg.deobf("curse.maven:jade-324717:6855440")
     //dummy mod
-    implementation fg.deobf("curse.maven:powerful_dummy-1276893:6956104")
+   // implementation fg.deobf("curse.maven:powerful_dummy-1276893:6956104")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

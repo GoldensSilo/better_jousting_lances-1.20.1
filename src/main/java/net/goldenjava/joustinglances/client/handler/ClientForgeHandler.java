@@ -1,6 +1,6 @@
 package net.goldenjava.joustinglances.client.handler;
 
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
@@ -30,7 +30,6 @@ public class ClientForgeHandler {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null) {
             var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) minecraft.player).get(ResourceLocation.fromNamespaceAndPath(JoustingLancesMod.MODID, "animation"));
-
             if (Keybindings.INSTANCE.stab.isDown()) {
                 PacketHandler.sendToServer(new SStabEntityPacket());
 
@@ -40,7 +39,7 @@ public class ClientForgeHandler {
                         //You can set an animation from anywhere ON THE CLIENT
                         //Do not attempt to do this on a server, that will only fail
 
-                        animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("joustinglances", "lance_stab_animation")))));
+                        animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("joustinglances", "lance_stab_animation")))).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
                         //You might use  animation.replaceAnimationWithFade(); to createSpace fade effect instead of sudden change
                         //See javadoc for details
                     }

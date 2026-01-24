@@ -6,7 +6,10 @@
 			"bones": {
 				"right_arm": {
 					"rotation": {
-						"vector": [-80, 0, 0]
+						"vector": [-92.67664, -7.47098, 13.38865]
+					},
+					"position": {
+						"vector": [0, 0, -3]
 					}
 				},
 				"bipedHandRight": {
@@ -15,6 +18,14 @@
 					},
 					"position": {
 						"vector": [0.5, -2.5, 1.5]
+					}
+				},
+				"right_item": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 7]
 					}
 				}
 			}
