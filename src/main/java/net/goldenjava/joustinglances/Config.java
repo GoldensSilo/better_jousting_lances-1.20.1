@@ -22,16 +22,33 @@ public class Config
             .comment("Cooldown (in ticks) of the lunge enchantment's dash. Must be a whole number. Min is 0 Max is 10000.")
             .defineInRange("lungeCooldown", 60, 0, 10000);
 
+    private static final ForgeConfigSpec.IntValue SPEAR_STAB_TIMER = BUILDER
+            .comment("How long a player can hold out their spear. Stab cooldown is inversely proportional to how long it's held. Must be a whole number. Min is 0 Max is 10000.")
+            .defineInRange("spearStabTimer", 100, 0, 10000);
+
     private static final ForgeConfigSpec.DoubleValue SPEAR_DAMAGE_MULTIPLIER = BUILDER
             .comment("The multiplier applied on lance movement damage. Values must have a decimal place, the decimal can be 0. Min is 0 Max is 10000.")
             .defineInRange("spearDamageMultiplier", 1.95, 0, 10000);
+
+    private static final ForgeConfigSpec.IntValue SPEAR_BASE_DAMAGE = BUILDER
+            .comment("How much damage the lance does regardless of movement. Must be a whole number. Min is -10000 Max is 10000.")
+            .defineInRange("spearBaseDamage", 1, -10000, 10000);
+
+    private static final ForgeConfigSpec.DoubleValue SPEAR_STAB_RANGE = BUILDER
+            .comment("How far a lance can stab. Values must have a decimal place, the decimal can be 0. Min is 0 Max is 10000.")
+            .defineInRange("spearStabRange", 7.0, 0, 10000);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static double verticalMultiplier;
     public static double horizontalMultiplier;
     public static int lungeCooldown;
+    public static int spearStabTimer;
     public static double spearDamageMultiplier;
+    public static double spearBaseDamage;
+    public static double spearStabRange;
+
+
 
 
     @SubscribeEvent
@@ -40,7 +57,9 @@ public class Config
         verticalMultiplier = VERTICAL_MULTIPLIER.get();
         horizontalMultiplier = HORIZONTAL_MULTIPLIER.get();
         lungeCooldown = LUNGE_COOLDOWN.get();
+        spearStabTimer = SPEAR_STAB_TIMER.get();
         spearDamageMultiplier = SPEAR_DAMAGE_MULTIPLIER.get();
-
+        spearBaseDamage = SPEAR_BASE_DAMAGE.get();
+        spearStabRange = SPEAR_STAB_RANGE.get();
     }
 }

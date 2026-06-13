@@ -36,19 +36,18 @@ public class SStabEntityPacket {
             if (player == null) {
                 return;
             }
-
             //ServerWork
             Level level = player.level();
-
+            
             //item checks
             ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND); //Check the item in the mainhand
             Item chosenItem = stack.getItem(); //gets exactly what item the stack found
             double totalDamageRaw = player.getAttributeValue(Attributes.ATTACK_DAMAGE); //grab play atk damage
-            float castedDamage = ((float) (totalDamageRaw)); //cast the double into a float so we can use it later
+            float castedDamage = ((float) ((totalDamageRaw) + Config.spearBaseDamage)); //cast the double into a float so we can use it later
 
             //set up points for raycast detection
             Vec3 rayStart = player.getEyePosition();
-            Vec3 rayEnd = rayStart.add(player.getForward().scale(7));
+            Vec3 rayEnd = rayStart.add(player.getForward().scale(Config.spearStabRange));
             AABB boundingBox = player.getBoundingBox().expandTowards(rayEnd.subtract(rayStart));
 
             //Funni spear castedSpeed variables
@@ -67,7 +66,7 @@ public class SStabEntityPacket {
             if (stack.is(ModTags.Items.LANCELIKE_ITEM)) {
                 for (Entity target : entities) {
                     HitResult hitResult = RayChecks.EntityCheck(target, rayStart, rayEnd, 0.1f);
-                    if (hitResult.getType() == HitResult.Type.ENTITY) {
+                    if (hitResult.getType() == HitResult.Type.ENTITY && (player.tickCount % 5) == 0) {
 
                         //get target's speed
                         double tdeltaX = target.getX() - target.xOld;
@@ -80,11 +79,31 @@ public class SStabEntityPacket {
 
                         /* ****************************************************************************************** */
 
-                        target.hurt(target.damageSources().playerAttack(player), castedDamage + (castedDamage * castedSpeed) + (castedDamage * tcastedSpeed));
+                        if (player.getControlledVehicle() != null){
+                            if (player.getLookAngle().y > -0.35){
+                                target.hurt(target.damageSources().playerAttack(player), castedDamage + (castedDamage * castedSpeed) + (castedDamage * tcastedSpeed));
+                                target.hurtMarked = true;
 
-                        target.hurtMarked = true;
+                                if ( !player.isCreative() && stack.isDamageableItem()){
+                                    stack.setDamageValue(stack.getDamageValue() + 1);
 
-                        //TODO: Lower durability on each hit, more than normal attacks
+                                    if(stack.isDamageableItem() && stack.getDamageValue() >= stack.getMaxDamage()){
+                                        stack.setCount(0);
+                                    }
+                                }
+                            }
+                        } else {
+                            target.hurt(target.damageSources().playerAttack(player), castedDamage + (castedDamage * castedSpeed) + (castedDamage * tcastedSpeed));
+                            target.hurtMarked = true;
+
+                            if ( !player.isCreative() && stack.isDamageableItem()){
+                                stack.setDamageValue(stack.getDamageValue() + 1);
+
+                                if(stack.isDamageableItem() && stack.getDamageValue() >= stack.getMaxDamage()){
+                                    stack.setCount(0);
+                                }
+                            }
+                        }
                     }
 
                 }
