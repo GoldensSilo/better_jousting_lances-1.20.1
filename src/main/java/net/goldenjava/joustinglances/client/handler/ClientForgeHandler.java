@@ -36,10 +36,10 @@ public class ClientForgeHandler {
         //tickTracker++;
         if (minecraft.player != null) {
             var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) minecraft.player).get(ResourceLocation.fromNamespaceAndPath(JoustingLancesMod.MODID, "animation"));
-            if (Keybindings.INSTANCE.stab.isDown() && canStab){
-                    PacketHandler.sendToServer(new SStabEntityPacket());
+            ItemStack handCheck = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
 
-                    ItemStack handCheck = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
+            if (Keybindings.INSTANCE.stab.isDown() && handCheck.is(ModTags.Items.LANCELIKE_ITEM) && canStab){
+                    PacketHandler.sendToServer(new SStabEntityPacket());
 
                     //Get the animation for that player
                     if (animation != null) {
