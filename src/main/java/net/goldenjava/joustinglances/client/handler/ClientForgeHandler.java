@@ -27,8 +27,8 @@ import java.util.Objects;
 //TODO Add Cooldown Indicator?
 @Mod.EventBusSubscriber(modid = JoustingLancesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeHandler {
-    static int stabTimer = Config.spearStabTimer;
-    static boolean canStab = true;
+    public static int stabTimer = Config.spearStabTimer;
+    public static boolean canStab = true;
 
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event){
@@ -39,24 +39,24 @@ public class ClientForgeHandler {
             ItemStack handCheck = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
 
             if (Keybindings.INSTANCE.stab.isDown() && handCheck.is(ModTags.Items.LANCELIKE_ITEM) && canStab){
-                    PacketHandler.sendToServer(new SStabEntityPacket());
+                PacketHandler.sendToServer(new SStabEntityPacket());
 
-                    //Get the animation for that player
-                    if (animation != null) {
-                        if (handCheck.is(ModTags.Items.LANCELIKE_ITEM)){
-                            //You can set an animation from anywhere ON THE CLIENT
-                            //Do not attempt to do this on a server, that will only fail
+                //Get the animation for that player
+                if (animation != null) {
+                    if (handCheck.is(ModTags.Items.LANCELIKE_ITEM)){
+                        //You can set an animation from anywhere ON THE CLIENT
+                        //Do not attempt to do this on a server, that will only fail
 
-                            animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("joustinglances", "lance_stab_animation")))).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
-                            //You might use  animation.replaceAnimationWithFade(); to createSpace fade effect instead of sudden change
-                            //See javadoc for details
-                        }
+                        animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("joustinglances", "lance_stab_animation")))).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
+                        //You might use  animation.replaceAnimationWithFade(); to createSpace fade effect instead of sudden change
+                        //See javadoc for details
                     }
+                }
 
                 if (handCheck.is(ModTags.Items.LANCELIKE_ITEM)){
                     //Decrease stab timer
                     stabTimer--;
-                   // minecraft.player.sendSystemMessage(Component.literal(String.valueOf(stabTimer)));
+                    // minecraft.player.sendSystemMessage(Component.literal(String.valueOf(stabTimer)));
                 }
             }
 

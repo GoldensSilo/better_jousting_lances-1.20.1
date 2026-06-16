@@ -1,6 +1,7 @@
 package net.goldenjava.joustinglances.network.packet;
 
 import net.goldenjava.joustinglances.Config;
+import net.goldenjava.joustinglances.network.PacketHandler;
 import net.goldenjava.joustinglances.registry.EffectRegistry;
 import net.goldenjava.joustinglances.registry.EnchantmentRegistry;
 import net.goldenjava.joustinglances.util.ModTags;
@@ -78,7 +79,6 @@ public class SStabEntityPacket {
                         float tcastedSpeed = ((float) (tspeedRaw * Config.spearDamageMultiplier)); //cast the double into a float so we can use it later
 
                         /* ****************************************************************************************** */
-
                         if (player.getControlledVehicle() != null){
                             if (player.getLookAngle().y > -0.35){
                                 target.hurt(target.damageSources().playerAttack(player), castedDamage + (castedDamage * castedSpeed) + (castedDamage * tcastedSpeed));
@@ -104,8 +104,11 @@ public class SStabEntityPacket {
                                 }
                             }
                         }
-                    }
 
+                        if(target.hurtMarked){
+                            PacketHandler.sendToPlayer(new CStabHitPacket(), player);
+                        }
+                    }
                 }
                 //Lunge Enchant stuff
                 int joustLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistry.LUNGE.get(), player);
