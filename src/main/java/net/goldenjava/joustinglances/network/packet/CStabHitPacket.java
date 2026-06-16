@@ -31,8 +31,8 @@ public class CStabHitPacket {
 
             ClientForgeHandler.stabTimer = Config.spearStabTimer - Config.stabHitCooldown;
             ClientForgeHandler.canStab = false;
-            player.displayClientMessage(Component.literal(String.valueOf(ClientForgeHandler.stabTimer)), true);
-            player.displayClientMessage(Component.literal(String.valueOf(ClientForgeHandler.canStab)), true);
+            //player.displayClientMessage(Component.literal(String.valueOf(ClientForgeHandler.stabTimer)), true);
+            //player.displayClientMessage(Component.literal(String.valueOf(ClientForgeHandler.canStab)), true);
 
         });
     }
